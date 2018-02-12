@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include "tools.h"
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
@@ -64,8 +65,23 @@ public:
   ///* Augmented state dimension
   int n_aug_;
 
+  ///* Number of sigma points
+  int n_sig_;
+
   ///* Sigma point spreading parameter
   double lambda_;
+
+  ///* the current NIS for radar
+  double NIS_radar_;
+
+  ///* the current NIS for laser
+  double NIS_laser_;
+
+  ///* Radar measurement noise covariance matrix
+  MatrixXd R_radar_;
+
+  ///* Lidar measurement noise covariance matrix
+  MatrixXd R_lidar_;
 
 
   /**
@@ -78,11 +94,12 @@ public:
    */
   virtual ~UKF();
 
+
   /**
    * ProcessMeasurement
    * @param meas_package The latest measurement data of either radar or laser
    */
-  void ProcessMeasurement(MeasurementPackage meas_package);
+  void ProcessMeasurement(MeasurementPackage measurement_pack);
 
   /**
    * Prediction Predicts sigma points, the state, and the state covariance
@@ -95,13 +112,18 @@ public:
    * Updates the state and the state covariance matrix using a laser measurement
    * @param meas_package The measurement at k+1
    */
-  void UpdateLidar(MeasurementPackage meas_package);
+  void UpdateLidar(MeasurementPackage measurement_pack);
 
   /**
    * Updates the state and the state covariance matrix using a radar measurement
    * @param meas_package The measurement at k+1
    */
-  void UpdateRadar(MeasurementPackage meas_package);
+  void UpdateRadar(MeasurementPackage measurement_pack);
+
+  void UpdateUKF(MeasurementPackage measurement_pack, MatrixXd Zsig, int n_z);
+
+
+  void AngleNormalization(double& ang);
 };
 
 #endif /* UKF_H */
