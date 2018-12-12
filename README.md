@@ -1,7 +1,7 @@
 # Unscented Kalman Filter
 Self-Driving Car Engineer Nanodegree Program
 
-This project contains implementation of Unscented Kalman Filter. Project assumptions are the same as at Extended Kalman Filter.
+This project contains implementation of Unscented Kalman Filter. Project assumptions are the same as at the Extended Kalman Filter.
 
 [//]: # (Image References)
 
